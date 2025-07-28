@@ -1,5 +1,6 @@
-package nod.common.global.exception;
+package nod.common.global.error;
 
+import nod.common.global.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public enum CommonError implements ErrorCode {

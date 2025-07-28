@@ -2,3 +2,4 @@ rootProject.name = 'nod'
 
 include 'auth'
 include 'gateway'
+include 'chat'

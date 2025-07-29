@@ -3,4 +3,7 @@ rootProject.name = 'nod'
 include 'auth'
 include 'gateway'
 include 'chat'
-include 'common'
+include 'common:core'   //core는 util을 포함한다.
+include 'common:util'
+include 'common:web'
+include 'common:webflux'

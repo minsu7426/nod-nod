@@ -1,0 +1,14 @@
+### auth-service - login
+POST http://localhost:9000/auth-service/auth/v1/login
+Content-Type: application/json
+
+{
+  "userId": "test1",
+  "password": "password1"
+}
+
+### auth-service - login
+POST http://localhost:9000/auth-service/auth/v1/register
+
+### auth-service - throw
+GET http://localhost:9000/auth-service/auth/v1/error

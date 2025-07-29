@@ -2,8 +2,8 @@ package nod.auth.init;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nod.auth.entity.User;
-import nod.auth.repository.UserRepository;
+import nod.auth.domain.user.entity.User;
+import nod.auth.domain.user.repository.UserRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

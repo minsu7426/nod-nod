@@ -23,3 +23,8 @@ spring:
     show-sql: true
     generate-ddl: true
     defer-datasource-initialization: false
+
+jwt:
+  secret: bm9kLW5vZC1qd3QtdG9rZW4tc2VjcmV0LW5vZC1ub2Qtand0LXRva2VuLXNlY3JldA==
+  access:
+    seconds: 1800 #초 30분

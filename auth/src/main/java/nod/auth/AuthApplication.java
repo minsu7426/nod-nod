@@ -6,7 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages = {
         "nod.auth",
-        "nod.common"
+        "nod.core",
+        "nod.util",
+        "nod.web"
 })
 @SpringBootApplication
 public class AuthApplication {

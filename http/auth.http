@@ -1,0 +1,31 @@
+### jwt login
+POST http://localhost:9000/auth-service/login
+Content-Type: application/json
+
+{
+  "username": "test1",
+  "password": "password1"
+}
+
+> {%
+    client.global.set("jwt", `Bearer ${response.headers.valueOf('Authorization')}`);
+    console.log('header = ', response.headers.valueOf('Authorization'))
+%}
+
+### register
+POST http://localhost:9000/auth-service/auth/v1/register
+Content-Type: application/json
+Authorization: {{jwt}}
+
+{
+  "userId": "test3"
+}
+
+### login
+POST http://localhost:9000/auth-service/auth/v1/login
+Content-Type: application/json
+
+{
+  "userId": "test3",
+  "password": "password3"
+}

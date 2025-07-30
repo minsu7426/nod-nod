@@ -59,7 +59,6 @@ public class WebExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handle(RuntimeException e) {
         log.warn("RuntimeException:", e);

@@ -4,6 +4,7 @@ import nod.core.exception.ErrorResponse;
 import org.springframework.web.bind.support.WebExchangeBindException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class WebFluxErrorAdapter implements ErrorResponse.ErrorAdapter {
@@ -20,8 +21,8 @@ public class WebFluxErrorAdapter implements ErrorResponse.ErrorAdapter {
                 .map(fieldError ->
                         new ErrorResponse.AdaptedFieldError(
                                 fieldError.getField(),
-                                fieldError.getRejectedValue(),
-                                fieldError.getDefaultMessage()
+                                Objects.toString(fieldError.getRejectedValue(), ""),
+                                Objects.toString(fieldError.getDefaultMessage(), "")
                         )
                 ).collect(Collectors.toList());
     }

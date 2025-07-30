@@ -1,5 +1,6 @@
 package nod.core.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class ErrorResponse {
     private final String message;
     private final String statusCode;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final List<FieldError> errors;
 
     private ErrorResponse(ErrorCode errorCode) {

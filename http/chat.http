@@ -9,15 +9,24 @@ Content-Type: application/json
 
 > {%
     client.global.set("jwt", `Bearer ${response.headers.valueOf('Authorization')}`);
-    console.log('header = ', response.headers.valueOf('Authorization'))
 %}
 
-### register
-POST http://localhost:9000/auth-service/auth/v1/register
+### chat
+POST http://localhost:9000/chat-service/llm/chat
 Content-Type: application/json
 Authorization: {{jwt}}
 
 {
-  "userId": "test3",
-  "password": "password3"
+  "request": "요청1",
+  "model": "GEMINI_2_0_FLASH"
+}
+
+### chat
+POST http://localhost:9000/chat-service/llm/stream
+Content-Type: application/json
+Authorization: {{jwt}}
+
+{
+  "request": "요청2",
+  "model": "GEMINI_2_0_FLASH"
 }

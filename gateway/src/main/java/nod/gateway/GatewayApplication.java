@@ -6,7 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan(basePackages = {
         "nod.gateway",
-        "nod.util"
+        "nod.util",
+        "nod.core",
+        "nod.webflux"
 })
 @SpringBootApplication
 public class GatewayApplication {

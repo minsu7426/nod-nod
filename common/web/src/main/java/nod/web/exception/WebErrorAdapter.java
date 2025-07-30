@@ -1,4 +1,4 @@
-package nod.auth.exception;
+package nod.web.exception;
 
 import nod.core.exception.ErrorResponse;
 import org.springframework.validation.BindingResult;

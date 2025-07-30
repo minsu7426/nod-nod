@@ -1,7 +1,6 @@
 package nod.web.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import nod.auth.exception.WebErrorAdapter;
 import nod.core.error.CommonError;
 import nod.core.exception.BusinessException;
 import nod.core.exception.ErrorResponse;
@@ -74,19 +73,5 @@ public class WebExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse response = ErrorResponse.from(CommonError.INTERVAL_SERVER_ERROR);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
-
-//    @ExceptionHandler(JwtException.class)
-//    public ResponseEntity<ErrorResponse> handle(JwtException e) {
-//        log.info("JwtException: {}", e.getMessage());
-//        ErrorResponse response;
-//        if (e instanceof ExpiredJwtException || e instanceof ExpiredTokenException) {
-//            response = ErrorResponse.from(CommonError.EXPIRED_TOKEN);
-//        } else if (e instanceof MissingJwtTokenException) {
-//            response = ErrorResponse.from(CommonError.MISSING_HEADER);
-//        } else {
-//            response = ErrorResponse.from(CommonError.INVALID_TOKEN);
-//        }
-//        return ResponseEntity.status(response.getStatus()).body(response);
-//    }
 
 }

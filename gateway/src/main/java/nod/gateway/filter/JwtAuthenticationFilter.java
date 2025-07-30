@@ -2,13 +2,13 @@ package nod.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nod.core.error.CommonError;
+import nod.core.exception.BusinessException;
 import nod.gateway.config.FilterConfig;
 import nod.util.jwt.TokenProvider;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -24,10 +24,11 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
     private final TokenProvider tokenProvider;
 
+    private static final String HEADER_USER_ID = "X-User-Id";
     public static final String BEARER_PREFIX = "Bearer ";
     public static final Map<String, List<String>> WHITE_LIST = Map.of(
             "auth-service", List.of("/login", "/auth/v1/register"),
-            "chat-service", List.of("/chat")
+            "chat-service", List.of("/hello")
     );
 
     @Override
@@ -37,27 +38,26 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
         log.debug("service: {}, path: {}", serviceName, path);
 
+        if (serviceName == null) {
+            return Mono.error(new BusinessException(CommonError.BAD_REQUEST));
+        }
+
         if (isWhitelisted(serviceName, path)) {
             return chain.filter(exchange);
         };
 
         String header = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
         if (header == null || !header.startsWith(BEARER_PREFIX)) {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-            return exchange.getResponse().setComplete();
+            return Mono.error(new BusinessException(CommonError.FORBIDDEN));
         }
 
-        String parseBearerToken = tokenProvider.parseBearerToken(header);
-        System.out.println("parseBearerToken = " + parseBearerToken);
-
-//        String token = header.substring(BEARER_PREFIX.length());
-
-        // TODO: JWT 검증
-        // if (!jwtUtil.validate(token)) return 401
+        String token = tokenProvider.parseBearerToken(header);
+        if (tokenProvider.isTokenExpired(token)) {
+            return Mono.error(new BusinessException(CommonError.EXPIRED_TOKEN));
+        }
 
         ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-                .header("X-User-Id", "mock-user") // 실제는 claim에서 userId 추출
+                .header(HEADER_USER_ID, tokenProvider.getUsername(token))
                 .build();
 
         return chain.filter(exchange.mutate().request(mutatedRequest).build());

@@ -50,7 +50,7 @@ public class TokenProvider {
                 .parseSignedClaims(token);
     }
 
-    public String validateTokenAndGetSubject(String token) {
+    public String getSubject(String token) {
         return this.validateAndParseToken(token)
                 .getPayload()
                 .getSubject();
@@ -65,26 +65,26 @@ public class TokenProvider {
         }
     }
 
-    public void validateTokenExpiration(String token) throws ExpiredTokenException {
+    public void assertNotExpired(String token) throws ExpiredTokenException {
         Date exp = validateAndParseToken(token).getPayload().getExpiration();
         if (exp.before(new Date())) {
             throw new ExpiredTokenException("expired token");
         }
     }
 
-    public Date validateTokenGetExpirationDate(String token) {
+    public Date getExpiration(String token) {
         return this.validateAndParseToken(token)
                 .getPayload()
                 .getExpiration();
     }
 
-    public String validateTokenGetUsername(String token) {
+    public String getUsername(String token) {
         return this.validateAndParseToken(token)
                 .getPayload()
                 .get(USERNAME_CLAIM, String.class);
     }
 
-    public List<String> validateTokenAndGetRoles(String token) {
+    public List<String> getRoles(String token) {
         Object roleObject = validateAndParseToken(token)
                 .getPayload()
                 .get(ROLES_CLAIM);

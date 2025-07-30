@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class TokenProvider {
 
-    private final long accessTokenSeconds;
+    private final long accessTokenMillis;
     private final SecretKey secretKey;
     private static final String USERNAME_CLAIM = "username";
     private static final String ROLES_CLAIM = "roles";
@@ -20,7 +20,7 @@ public class TokenProvider {
     private static final String ISSUER = "NOD-NOD";
 
     public TokenProvider(String secret, long accessTokenSeconds) {
-        this.accessTokenSeconds = accessTokenSeconds * 1000;
+        this.accessTokenMillis = accessTokenSeconds * 1000;
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
@@ -31,7 +31,7 @@ public class TokenProvider {
                 .claim(USERNAME_CLAIM, username)
                 .claim(ROLES_CLAIM, authorities)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + accessTokenSeconds))
+                .expiration(new Date(System.currentTimeMillis() + accessTokenMillis))
                 .signWith(secretKey)
                 .compact();
     }

@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Getter
 public class ErrorResponse {
@@ -37,7 +35,7 @@ public class ErrorResponse {
     }
 
     public static ErrorResponse fromBindingResult(ErrorCode errorCode, ErrorAdapter adapter) {
-        return new ErrorResponse(errorCode, FieldError.from(adapter));
+        return new ErrorResponse(errorCode, adapter.getErrors());
     }
 
     @Getter
@@ -47,27 +45,10 @@ public class ErrorResponse {
         private String field;
         private String value;
         private String reason;
-
-        public static List<FieldError> from(ErrorAdapter adapter) {
-            return adapter.getErrors().stream()
-                    .map(e -> new FieldError(
-                            e.getField(),
-                            Objects.toString(e.getRejectedValue(), ""),
-                            e.getReason()
-                    ))
-                    .collect(Collectors.toList());
-        }
     }
 
     public interface ErrorAdapter {
-        List<AdaptedFieldError> getErrors();
+        List<FieldError> getErrors();
     }
 
-    @Getter
-    @AllArgsConstructor
-    public static class AdaptedFieldError {
-        private final String field;
-        private final Object rejectedValue;
-        private final String reason;
-    }
 }

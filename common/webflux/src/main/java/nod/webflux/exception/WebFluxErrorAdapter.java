@@ -16,10 +16,10 @@ public class WebFluxErrorAdapter implements ErrorResponse.ErrorAdapter {
     }
 
     @Override
-    public List<ErrorResponse.AdaptedFieldError> getErrors() {
+    public List<ErrorResponse.FieldError> getErrors() {
         return exception.getFieldErrors().stream()
                 .map(fieldError ->
-                        new ErrorResponse.AdaptedFieldError(
+                        new ErrorResponse.FieldError(
                                 fieldError.getField(),
                                 Objects.toString(fieldError.getRejectedValue(), ""),
                                 Objects.toString(fieldError.getDefaultMessage(), "")

@@ -6,7 +6,6 @@ public enum CommonError implements ErrorCode {
     //400
     BAD_REQUEST(400, "잘못된 요청 입니다."),
     INVALID_INPUT_VALUE(400, "잘못된 입력 입니다."),
-    LOGIN_FAILED(400, "아이디 또는 패스워드가 일치하지 않습니다."),
 
     //401
     EXPIRED_TOKEN(401, "만료된 토큰 입니다."),

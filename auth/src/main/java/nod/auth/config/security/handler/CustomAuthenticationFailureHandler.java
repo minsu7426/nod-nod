@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import nod.core.error.CommonError;
+import nod.core.error.UserError;
 import nod.core.exception.ErrorResponse;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -22,7 +23,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        ErrorResponse result = ErrorResponse.from(CommonError.LOGIN_FAILED);
+        ErrorResponse result = ErrorResponse.from(UserError.LOGIN_FAILED);
 
         response.setStatus(result.getStatus());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
